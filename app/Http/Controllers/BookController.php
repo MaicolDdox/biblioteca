@@ -12,7 +12,14 @@ class BookController extends Controller
      */
     public function index()
     {
-        //
+        $books = Book::paginate(10);
+        return view('container.books.index', compact('books'));
+    }
+
+    public function catalogo()
+    {
+        $books = Book::all();
+        return view('container.books.catalogo', compact('books'));
     }
 
     /**
@@ -20,7 +27,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        return view('container.books.create');
     }
 
     /**
@@ -28,15 +35,25 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'titulo'           => 'required|string|max:255',
+            'autor'            => 'required|string|max:255',
+            'year_publicacion' => 'required|date',
+        ]);
+
+        Book::create($validated);  // asegurate que $fillable en Book tenga esos campos
+        return redirect()->route('books.index')
+            ->with('success', 'Libro creado correctamente.');
     }
+
 
     /**
      * Display the specified resource.
      */
     public function show(Book $book)
     {
-        //
+        // Retorna una vista con el libro individual
+        return view('container.books.show', compact('book'));
     }
 
     /**
@@ -44,7 +61,8 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        //
+        // Muestra el formulario de edición
+        return view('container.books.edit', compact('book'));
     }
 
     /**
@@ -52,14 +70,29 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        //
+        $validated = $request->validate([
+            'titulo'           => 'required|string|max:255',
+            'autor'            => 'required|string|max:255',
+            'year_publicacion' => 'required|date',
+            'estado'           => 'required|in:disponible,prestado',
+        ]);
+
+        $book->update($validated);
+
+        return redirect()
+            ->route('books.index')
+            ->with('success', 'Libro actualizado correctamente.');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Book $book)
     {
-        //
+        $book->delete();
+
+        return redirect()->route('books.index')
+            ->with('success', 'Libro eliminado correctamente.');
     }
 }

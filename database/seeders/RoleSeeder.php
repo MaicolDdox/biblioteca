@@ -25,6 +25,7 @@ class RoleSeeder extends Seeder
         //-----------------------
 
         //Permisos de Gestionar libros
+        Permission::create(['name' => 'libros.catalogo']);
         Permission::create(['name' => 'libros.index']);
         Permission::create(['name' => 'libros.store']);
         Permission::create(['name' => 'libros.show']);
@@ -54,7 +55,8 @@ class RoleSeeder extends Seeder
 
         $estudiante->givePermissionTo([
         'libros.index',
-        'prestamos.pedir'
+        'prestamos.pedir',
+        'libros.catalogo'
         ]);
 
 

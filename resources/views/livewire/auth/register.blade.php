@@ -57,6 +57,26 @@
             @enderror
         </div>
 
+            <!-- Grado -->
+        <div class="space-y-2">
+            <label for="grado" class="block text-sm font-medium text-gray-700">
+                {{ __('Grado') }}
+            </label>
+                <input
+                    id="grado"
+                    wire:model="grado"
+                    type="number"
+                    name="grado"
+                    required
+                    placeholder="{{ __('Ej: 11°') }}"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 bg-white text-gray-900 placeholder-gray-500"
+                />
+                @error('grado')
+                    <p class="text-sm text-red-600">{{ $message }}</p>
+                @enderror
+        </div>
+
+
         <!-- Password -->
         <div class="space-y-2">
             <label for="password" class="block text-sm font-medium text-gray-700">

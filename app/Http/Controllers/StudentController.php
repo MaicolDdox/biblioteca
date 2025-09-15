@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class StudentController extends Controller
 {
@@ -12,7 +13,11 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::role('estudiante')
+            ->with('student')
+            ->paginate(10);
+
+        return view('container.students.index', compact('users'));
     }
 
     /**
